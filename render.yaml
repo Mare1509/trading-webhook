@@ -2,6 +2,6 @@ services:
   - type: web
     name: webhook-server
     env: python
-    plan: free
-    buildCommand: ""
-    startCommand: "python main.py"
+    plan: starter
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn main:app"
