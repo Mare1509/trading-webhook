@@ -4,14 +4,14 @@ app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
 def webhook():
-    data = request.json
-    print("📩 Neue Nachricht empfangen:")
-    print(data)
-    signal = data.get("signal")
-    pair = data.get("pair")
-    if signal == "buy" and pair == "EUR/USD":
-        print("🚀 Kaufsignal erkannt für EUR/USD!")
-    return '', 200
+    try:
+        data = request.get_data(as_text=True)
+        print("✅ Webhook empfangen:", data)
+        return '', 200
+    except Exception as e:
+        print("❌ Fehler beim Verarbeiten:", e)
+        return '', 400
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
+
